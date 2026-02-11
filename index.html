@@ -64,8 +64,6 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
@@ -121,7 +119,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -1;
+        z-index: -1; /* Behind everything */
         opacity: 0.6;
         pointer-events: none;
       }
@@ -175,26 +173,48 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       }
 
-      /* Text Gradient */
-      .text-void-gradient {
-        background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      /* Reveal Animation Classes */
+      .reveal-item {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 1s cubic-bezier(0.2, 1, 0.3, 1),
+          transform 1s cubic-bezier(0.2, 1, 0.3, 1);
       }
 
-      /* Image Reveal Effect */
-      .image-reveal {
-        clip-path: inset(0 100% 0 0);
-        transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
+      .reveal-item.active {
+        opacity: 1;
+        transform: translateY(0);
       }
-      .image-reveal.active {
-        clip-path: inset(0 0 0 0);
+
+      /* Stagger Delays */
+      .delay-100 {
+        transition-delay: 100ms;
+      }
+      .delay-200 {
+        transition-delay: 200ms;
+      }
+      .delay-300 {
+        transition-delay: 300ms;
+      }
+      .delay-400 {
+        transition-delay: 400ms;
       }
 
       /* Logo Animation */
       .logo-rings circle {
         transform-origin: center;
         opacity: 0.8;
+        animation: breathe 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes breathe {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.05);
+        }
       }
 
       /* Marquee Animation */
@@ -211,11 +231,11 @@
       }
     </style>
   </head>
-  <body class="antialiased selection:bg-cyan-500/30 overflow-hidden">
+  <body class="antialiased selection:bg-cyan-500/30">
     <!-- Splash Screen -->
     <div
       id="splash-screen"
-      class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505]"
+      class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505] transition-opacity duration-700"
     >
       <div class="flex flex-col items-center">
         <svg
@@ -278,7 +298,6 @@
         class="max-w-[1400px] flex flex-wrap items-center justify-between mx-auto px-4 md:px-6 py-4"
       >
         <a href="#" class="flex items-center gap-2 md:gap-3 group interactive">
-          <!-- SVG Logo mimicking the uploaded image -->
           <svg
             width="32"
             height="32"
@@ -439,35 +458,35 @@
     <!-- Hero Section -->
     <section
       id="home"
-      class="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden"
+      class="relative z-10 min-h-screen flex items-center pt-24 pb-12 overflow-hidden"
     >
       <div
         class="max-w-[1400px] mx-auto px-6 w-full relative z-10 grid md:grid-cols-2 gap-12 items-center"
       >
         <div class="hero-content text-center md:text-left">
           <div
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-white/10 text-cyan-400 text-xs font-mono mb-8 tracking-widest uppercase justify-center md:justify-start"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-white/10 text-cyan-400 text-xs font-mono mb-8 tracking-widest uppercase justify-center md:justify-start reveal-item"
           >
             <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-            System Operational
+            <span id="typewriter-text"></span
+            ><span class="animate-pulse">_</span>
           </div>
-          <!-- Responsive text sizing -->
           <h1
-            class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-display font-bold leading-[1.1] md:leading-[0.9] tracking-tighter mb-8 text-white"
+            class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-display font-bold leading-[1.1] md:leading-[0.9] tracking-tighter mb-8 text-white reveal-item delay-100"
           >
             DIGITAL <br />
             <span class="text-gray-600">REALITY</span> <br />
             ARCHITECTS.
           </h1>
           <p
-            class="text-base md:text-xl text-gray-400 max-w-lg leading-relaxed mb-10 font-light md:border-l border-cyan-900 md:pl-6 mx-auto md:mx-0"
+            class="text-base md:text-xl text-gray-400 max-w-lg leading-relaxed mb-10 font-light md:border-l border-cyan-900 md:pl-6 mx-auto md:mx-0 reveal-item delay-200"
           >
             We are VoidWeb. We don't just build websites; we engineer immersive
             digital ecosystems. Specializing in high-performance UI/UX and
             visual development for global brands.
           </p>
           <div
-            class="flex flex-col sm:flex-row items-center gap-6 justify-center md:justify-start"
+            class="flex flex-col sm:flex-row items-center gap-6 justify-center md:justify-start reveal-item delay-300"
           >
             <a
               href="#projects"
@@ -494,8 +513,7 @@
             </a>
           </div>
         </div>
-
-        <!-- Hero Visual Decoration (Hidden on small screens to save space) -->
+        <!-- Hero Visual Decoration -->
         <div class="hidden md:block relative h-full min-h-[500px]">
           <div
             class="absolute right-0 top-1/2 -translate-y-1/2 w-[400px] h-[400px] lg:w-[600px] lg:h-[600px] bg-cyan-500/5 rounded-full blur-3xl"
@@ -503,7 +521,6 @@
         </div>
       </div>
 
-      <!-- Scroll Indicator (Hidden on mobile) -->
       <div
         class="hidden md:flex absolute bottom-10 right-10 flex-col items-center gap-4"
       >
@@ -517,13 +534,13 @@
     </section>
 
     <!-- Services Section (Bento Grid) -->
-    <section id="services" class="py-24 md:py-32 relative">
+    <section id="services" class="relative z-10 py-24 md:py-32">
       <div class="max-w-[1400px] mx-auto px-6">
         <div
           class="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 md:mb-20"
         >
           <div
-            class="mb-6 md:mb-0 text-center md:text-left flex flex-col items-center md:items-start w-full md:w-auto"
+            class="mb-6 md:mb-0 text-center md:text-left flex flex-col items-center md:items-start w-full md:w-auto reveal-item"
           >
             <h2
               class="text-3xl md:text-6xl font-display font-bold text-white mb-4"
@@ -533,7 +550,7 @@
             <div class="h-1 w-24 bg-cyan-500"></div>
           </div>
           <p
-            class="text-gray-400 max-w-sm text-center md:text-right w-full md:w-auto mt-4 md:mt-0"
+            class="text-gray-400 max-w-sm text-center md:text-right w-full md:w-auto mt-4 md:mt-0 reveal-item delay-100"
           >
             Precision-engineered solutions for the modern web landscape.
           </p>
@@ -543,7 +560,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[600px]">
           <!-- Large Card -->
           <div
-            class="interactive md:col-span-2 md:row-span-2 glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 transition-all duration-500 min-h-[300px]"
+            class="interactive service-card md:col-span-2 md:row-span-2 glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 transition-all duration-500 min-h-[300px] reveal-item delay-100"
           >
             <div
               class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl transform group-hover:scale-150 transition-transform duration-700"
@@ -586,7 +603,7 @@
 
           <!-- Tall Card -->
           <div
-            class="interactive glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 transition-all duration-500 min-h-[250px]"
+            class="interactive service-card glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 transition-all duration-500 min-h-[250px] reveal-item delay-200"
           >
             <div class="relative z-10 h-full flex flex-col justify-between">
               <i data-lucide="code-2" class="w-10 h-10 text-cyan-400 mb-4"></i>
@@ -608,7 +625,7 @@
 
           <!-- Wide Card -->
           <div
-            class="interactive glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 transition-all duration-500 min-h-[250px]"
+            class="interactive service-card glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 transition-all duration-500 min-h-[250px] reveal-item delay-300"
           >
             <div class="relative z-10 h-full flex flex-col justify-between">
               <i data-lucide="box" class="w-10 h-10 text-cyan-400 mb-4"></i>
@@ -631,7 +648,8 @@
 
     <!-- NEW SECTION: Tech Stack Marquee -->
     <section
-      class="py-12 border-t border-b border-white/5 bg-black/50 overflow-hidden relative"
+      id="tech-stack"
+      class="relative z-10 py-12 border-t border-b border-white/5 bg-black/50 overflow-hidden reveal-item"
     >
       <div
         class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10"
@@ -647,22 +665,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
-              ></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <path d="M9 13l-1.5 2.5L9 18"></path>
-              <path d="M15 13l1.5 2.5-1.5 2.5"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >HTML5</span
             >
@@ -670,19 +672,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-              ></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >CSS3</span
             >
@@ -690,18 +679,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <path d="M9 9h6v6H9z"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >JAVASCRIPT</span
             >
@@ -709,19 +686,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-              ></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >WEBFLOW</span
             >
@@ -729,32 +693,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="3"></circle>
-              <ellipse cx="12" cy="12" rx="10" ry="4"></ellipse>
-              <ellipse
-                cx="12"
-                cy="12"
-                rx="10"
-                ry="4"
-                transform="rotate(60 12 12)"
-              ></ellipse>
-              <ellipse
-                cx="12"
-                cy="12"
-                rx="10"
-                ry="4"
-                transform="rotate(120 12 12)"
-              ></ellipse>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >REACT</span
             >
@@ -762,17 +700,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M12 2l9 5v10l-9 5-9-5V7z"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >NODE.JS</span
             >
@@ -780,18 +707,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M5 2l10 10-5 5 2 2-7 3"></path>
-              <path d="M14 2L7 9"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >FLUTTER</span
             >
@@ -799,19 +714,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-              <path d="M2 12h20"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >WORDPRESS</span
             >
@@ -819,46 +721,15 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
-              ></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >SHOPIFY</span
             >
           </div>
 
-          <!-- Set 2 (Duplicate) -->
+          <!-- Set 2 (Duplicate for loop) -->
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
-              ></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <path d="M9 13l-1.5 2.5L9 18"></path>
-              <path d="M15 13l1.5 2.5-1.5 2.5"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >HTML5</span
             >
@@ -866,19 +737,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-              ></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >CSS3</span
             >
@@ -886,18 +744,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <path d="M9 9h6v6H9z"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >JAVASCRIPT</span
             >
@@ -905,19 +751,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-              ></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >WEBFLOW</span
             >
@@ -925,32 +758,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="3"></circle>
-              <ellipse cx="12" cy="12" rx="10" ry="4"></ellipse>
-              <ellipse
-                cx="12"
-                cy="12"
-                rx="10"
-                ry="4"
-                transform="rotate(60 12 12)"
-              ></ellipse>
-              <ellipse
-                cx="12"
-                cy="12"
-                rx="10"
-                ry="4"
-                transform="rotate(120 12 12)"
-              ></ellipse>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >REACT</span
             >
@@ -958,17 +765,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M12 2l9 5v10l-9 5-9-5V7z"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >NODE.JS</span
             >
@@ -976,18 +772,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M5 2l10 10-5 5 2 2-7 3"></path>
-              <path d="M14 2L7 9"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >FLUTTER</span
             >
@@ -995,19 +779,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-              <path d="M2 12h20"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >WORDPRESS</span
             >
@@ -1015,21 +786,6 @@
           <div
             class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
           >
-            <svg
-              class="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
-              ></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
             <span class="text-xl font-display font-bold tracking-widest"
               >SHOPIFY</span
             >
@@ -1039,9 +795,9 @@
     </section>
 
     <!-- NEW SECTION: Process / Workflow -->
-    <section class="py-24 bg-gray-950/50">
+    <section id="process" class="relative z-10 py-24 bg-gray-950/50">
       <div class="max-w-[1400px] mx-auto px-6">
-        <div class="mb-16 text-center md:text-left">
+        <div class="mb-16 text-center md:text-left reveal-item">
           <h2
             class="text-3xl md:text-5xl font-display font-bold text-white mb-4"
           >
@@ -1056,7 +812,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           <!-- Step 1 -->
           <div
-            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300"
+            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 process-card reveal-item delay-100"
           >
             <div
               class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors"
@@ -1071,7 +827,7 @@
           </div>
           <!-- Step 2 -->
           <div
-            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300"
+            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 process-card reveal-item delay-200"
           >
             <div
               class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors"
@@ -1086,7 +842,7 @@
           </div>
           <!-- Step 3 -->
           <div
-            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300"
+            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 process-card reveal-item delay-300"
           >
             <div
               class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors"
@@ -1101,7 +857,7 @@
           </div>
           <!-- Step 4 -->
           <div
-            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300"
+            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 process-card reveal-item delay-400"
           >
             <div
               class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors"
@@ -1119,10 +875,10 @@
     </section>
 
     <!-- Selected Works (Immersive List) -->
-    <section id="projects" class="py-24 md:py-32 bg-black">
+    <section id="projects" class="relative z-10 py-24 md:py-32 bg-black">
       <div class="max-w-[1400px] mx-auto px-6">
         <h2
-          class="text-sm font-mono text-cyan-500 tracking-widest mb-12 uppercase"
+          class="text-sm font-mono text-cyan-500 tracking-widest mb-12 uppercase reveal-item"
         >
           Selected Case Studies
         </h2>
@@ -1130,9 +886,8 @@
         <div class="space-y-24 md:space-y-32">
           <!-- Project 1 -->
           <div
-            class="group relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
+            class="group relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal-item"
           >
-            <!-- Text Section: Order changes on mobile so image is usually first in visual flow if preferred, but here keeping text top on mobile is good for context -->
             <div class="md:col-span-5 relative z-10 order-2 md:order-1">
               <div
                 class="text-6xl font-display font-bold text-gray-800 absolute -top-12 -left-4 -z-10 opacity-20 hidden md:block"
@@ -1155,9 +910,7 @@
               </div>
             </div>
             <div class="md:col-span-7 order-1 md:order-2">
-              <div
-                class="relative overflow-hidden rounded-lg image-reveal gs-reveal h-[300px] md:h-[500px]"
-              >
+              <div class="relative overflow-hidden rounded-lg">
                 <img
                   src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop"
                   alt="Restaurant UI"
@@ -1169,12 +922,10 @@
 
           <!-- Project 2 -->
           <div
-            class="group relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
+            class="group relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal-item"
           >
             <div class="md:col-span-7">
-              <div
-                class="relative overflow-hidden rounded-lg image-reveal gs-reveal h-[300px] md:h-[500px]"
-              >
+              <div class="relative overflow-hidden rounded-lg">
                 <img
                   src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop"
                   alt="Logistics UI"
@@ -1207,7 +958,7 @@
 
           <!-- Project 3 -->
           <div
-            class="group relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
+            class="group relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal-item"
           >
             <div class="md:col-span-5 relative z-10 order-2 md:order-1">
               <div
@@ -1231,9 +982,7 @@
               </div>
             </div>
             <div class="md:col-span-7 order-1 md:order-2">
-              <div
-                class="relative overflow-hidden rounded-lg image-reveal gs-reveal h-[300px] md:h-[500px]"
-              >
+              <div class="relative overflow-hidden rounded-lg">
                 <img
                   src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop"
                   alt="Education UI"
@@ -1246,8 +995,68 @@
       </div>
     </section>
 
+    <!-- NEW SECTION: Testimonials -->
+    <section id="testimonials" class="relative z-10 py-24 overflow-hidden">
+      <div
+        class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-cyan-900/10 to-transparent pointer-events-none"
+      ></div>
+      <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+        <h2
+          class="text-sm font-mono text-cyan-500 tracking-widest mb-12 uppercase reveal-item"
+        >
+          Client Voices
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div
+            class="glass-panel p-10 rounded-2xl border border-gray-800 relative reveal-item delay-100"
+          >
+            <i data-lucide="quote" class="w-10 h-10 text-gray-700 mb-6"></i>
+            <p class="text-lg text-gray-300 leading-relaxed mb-6 italic">
+              "VoidWeb Solutions transformed our vision into a stunning reality.
+              The attention to detail and UI/UX expertise is unmatched."
+            </p>
+            <div class="flex items-center gap-4">
+              <div
+                class="w-10 h-10 rounded-full bg-cyan-500 flex items-center justify-center font-bold text-black"
+              >
+                S
+              </div>
+              <div>
+                <div class="text-white font-bold">Samer Mumtaz</div>
+                <div class="text-cyan-400 text-xs uppercase tracking-wide">
+                  Owner, Chef Samer
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="glass-panel p-10 rounded-2xl border border-gray-800 relative reveal-item delay-200"
+          >
+            <i data-lucide="quote" class="w-10 h-10 text-gray-700 mb-6"></i>
+            <p class="text-lg text-gray-300 leading-relaxed mb-6 italic">
+              "Professional, timely, and innovative. The logistics dashboard
+              they built streamlined our operations significantly."
+            </p>
+            <div class="flex items-center gap-4">
+              <div
+                class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold text-black"
+              >
+                M
+              </div>
+              <div>
+                <div class="text-white font-bold">Marketing Lead</div>
+                <div class="text-cyan-400 text-xs uppercase tracking-wide">
+                  Mercon Logistics
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Agency/Stats Section -->
-    <section id="about" class="py-24 md:py-32 relative overflow-hidden">
+    <section id="about" class="relative z-10 py-24 md:py-32 overflow-hidden">
       <!-- Background decorative line -->
       <div class="absolute top-1/2 left-0 w-full h-[1px] bg-gray-800"></div>
 
@@ -1255,17 +1064,19 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
           <div>
             <h2
-              class="text-4xl md:text-7xl font-display font-bold text-white mb-8"
+              class="text-4xl md:text-7xl font-display font-bold text-white mb-8 reveal-item"
             >
               THE <br />
               AGENCY.
             </h2>
-            <p class="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
+            <p
+              class="text-gray-400 text-base md:text-lg leading-relaxed mb-8 reveal-item delay-100"
+            >
               Founded on the principle that code is art and design is function.
               VoidWeb Solutions is a founder-led studio where every pixel is
               placed with intention.
             </p>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 reveal-item delay-200">
               <div>
                 <div class="text-white font-bold text-lg md:text-xl">
                   Founder - Aslaq Rahman
@@ -1276,7 +1087,7 @@
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
             <div
-              class="glass-panel p-6 md:p-8 flex flex-col justify-center border-l-4 border-cyan-500"
+              class="glass-panel p-6 md:p-8 flex flex-col justify-center border-l-4 border-cyan-500 reveal-item delay-100"
             >
               <span class="text-4xl md:text-5xl font-bold text-white mb-2"
                 >25+</span
@@ -1286,7 +1097,7 @@
               >
             </div>
             <div
-              class="glass-panel p-6 md:p-8 flex flex-col justify-center border-l-4 border-gray-700"
+              class="glass-panel p-6 md:p-8 flex flex-col justify-center border-l-4 border-gray-700 reveal-item delay-200"
             >
               <span class="text-4xl md:text-5xl font-bold text-white mb-2"
                 >98%</span
@@ -1296,7 +1107,7 @@
               >
             </div>
             <div
-              class="glass-panel p-6 md:p-8 flex flex-col justify-center border-l-4 border-gray-700"
+              class="glass-panel p-6 md:p-8 flex flex-col justify-center border-l-4 border-gray-700 reveal-item delay-300"
             >
               <span class="text-4xl md:text-5xl font-bold text-white mb-2"
                 >6+</span
@@ -1306,7 +1117,7 @@
               >
             </div>
             <div
-              class="glass-panel p-6 md:p-8 flex flex-col justify-center border-l-4 border-gray-700 bg-cyan-900/10"
+              class="glass-panel p-6 md:p-8 flex flex-col justify-center border-l-4 border-gray-700 bg-cyan-900/10 reveal-item delay-400"
             >
               <span class="text-4xl md:text-5xl font-bold text-cyan-400 mb-2"
                 >∞</span
@@ -1323,29 +1134,31 @@
     <!-- Footer / Contact -->
     <footer
       id="contact"
-      class="bg-gray-950 pt-24 pb-12 border-t border-gray-900 relative"
+      class="bg-gray-950 pt-24 pb-12 border-t border-gray-900 relative z-10"
     >
       <div class="max-w-[1400px] mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 mb-24">
           <div>
             <h2
-              class="text-5xl md:text-8xl font-display font-bold text-white mb-8 tracking-tighter"
+              class="text-5xl md:text-8xl font-display font-bold text-white mb-8 tracking-tighter reveal-item"
             >
               LET'S TALK
             </h2>
-            <p class="text-gray-400 text-lg md:text-xl max-w-md mb-8">
+            <p
+              class="text-gray-400 text-lg md:text-xl max-w-md mb-8 reveal-item delay-100"
+            >
               Have a project in mind? We'd love to hear about it. Send us a
               message and let's start building.
             </p>
             <a
               href="mailto:solutions.voidweb@gmail.com"
-              class="interactive text-xl md:text-2xl text-cyan-400 hover:text-white underline decoration-cyan-500 underline-offset-8 transition-colors break-all"
+              class="interactive text-xl md:text-2xl text-cyan-400 hover:text-white underline decoration-cyan-500 underline-offset-8 transition-colors break-all reveal-item delay-200"
             >
               solutions.voidweb@gmail.com
             </a>
           </div>
           <div
-            class="glass-panel p-6 md:p-8 rounded-2xl border border-gray-800"
+            class="glass-panel p-6 md:p-8 rounded-2xl border border-gray-800 reveal-item delay-100"
           >
             <form
               action="https://formspree.io/f/meeleeqq"
@@ -1459,6 +1272,36 @@
       </div>
     </footer>
 
+    <!-- Floating WhatsApp Button (Liquid Glass Style) -->
+    <a
+      href="https://wa.link/egw544"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:bg-white/10 transition-all duration-500 ease-out hover:scale-110 group interactive overflow-hidden ring-1 ring-white/5"
+    >
+      <!-- Liquid Shine Effect -->
+      <div
+        class="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-white/10 opacity-50 group-hover:opacity-100 transition-opacity duration-500"
+      ></div>
+
+      <!-- Icon -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-gray-200 group-hover:text-cyan-300 transition-colors relative z-10 w-5 h-5 md:w-6 md:h-6"
+      >
+        <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
+      </svg>
+      <span class="sr-only">Contact on WhatsApp</span>
+    </a>
+
     <script>
       // Initialize Icons
       lucide.createIcons();
@@ -1485,52 +1328,83 @@
         );
       });
 
-      // --- Splash Screen Logic ---
-      window.addEventListener("load", () => {
+      // --- Typewriter Logic ---
+      function startTypewriter() {
+        const text = "System Operational";
+        const element = document.getElementById("typewriter-text");
+        if (!element) return;
+
+        let i = 0;
+        element.innerHTML = ""; // Clear initial content just in case
+
+        function type() {
+          if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 50); // Typing speed
+          }
+        }
+        type();
+      }
+
+      // --- Splash Screen & Intro Logic ---
+      function removeSplashAndStart() {
         const splash = document.getElementById("splash-screen");
-        const splashText = document.getElementById("splash-text");
-
-        // Text reveal animation
-        setTimeout(() => {
-          splashText.classList.remove("opacity-0", "translate-y-4");
-        }, 500);
-
-        // Fade out
-        setTimeout(() => {
-          splash.style.transition = "opacity 0.8s ease-out";
+        if (splash) {
           splash.style.opacity = "0";
           splash.style.pointerEvents = "none";
 
+          // Allow scrolling again
+          document.body.style.overflow = "auto";
+
           setTimeout(() => {
             splash.remove();
-            document.body.classList.remove("overflow-hidden");
+            // Trigger initial hero animations after splash is gone
+            initObserver();
+            // Start typewriter effect a bit after reveal
+            setTimeout(startTypewriter, 200);
           }, 800);
-        }, 2500);
+        }
+      }
+
+      window.addEventListener("load", () => {
+        const splashText = document.getElementById("splash-text");
+        // Initial text reveal
+        setTimeout(() => {
+          if (splashText)
+            splashText.classList.remove("opacity-0", "translate-y-4");
+        }, 500);
+
+        // Fade out after delay
+        setTimeout(removeSplashAndStart, 2500);
       });
 
-      // --- Logo Animation (Concentric Rings) on Scroll ---
-      gsap.to(".logo-rings circle", {
-        scale: 1.2,
-        stagger: 0.1,
-        repeat: -1,
-        yoyo: true,
-        duration: 2,
-        ease: "sine.inOut",
-      });
+      // Safety fallback: If page load hangs, force remove splash after 5 seconds
+      setTimeout(removeSplashAndStart, 5000);
 
-      // --- GSAP Animations ---
-      gsap.registerPlugin(ScrollTrigger);
+      // Lock scroll initially via JS
+      document.body.style.overflow = "hidden";
 
-      // Reveal Images on Scroll
-      const revealElements = document.querySelectorAll(".gs-reveal");
-      revealElements.forEach((element) => {
-        ScrollTrigger.create({
-          trigger: element,
-          start: "top 80%",
-          onEnter: () => element.classList.add("active"),
-          once: true,
-        });
-      });
+      // --- Vanilla JS Intersection Observer for Scroll Animations ---
+      function initObserver() {
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.1, // Trigger when 10% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+              observer.unobserve(entry.target); // Only animate once
+            }
+          });
+        }, observerOptions);
+
+        const elements = document.querySelectorAll(".reveal-item");
+        elements.forEach((el) => observer.observe(el));
+      }
 
       // --- THE VOID VORTEX CANVAS ---
       // A complex concentric circle animation mimicking the logo
