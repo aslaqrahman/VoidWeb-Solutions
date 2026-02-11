@@ -4,12 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-VFNZF1HRN4"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-VFNZF1HRN4");
+    </script>
+
     <!-- Primary Meta Tags -->
     <title>VoidWeb Solutions | pixel. perfect.</title>
     <meta name="title" content="VoidWeb Solutions | pixel. perfect." />
     <meta
       name="description"
-      content="VoidWeb Solutions is a premium digital agency specializing in high-performance UI/UX design, visual development, and immersive digital ecosystems for global brands."
+      content="VoidWeb Solutions: Premium UI/UX design, visual development, and immersive digital ecosystems."
     />
     <meta
       name="keywords"
@@ -17,13 +32,17 @@
     />
     <meta name="author" content="VoidWeb Solutions" />
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png" />
+    <link rel="shortcut icon" href="logo.png" />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://voidwebsolutions.com/" />
     <meta property="og:title" content="VoidWeb Solutions | pixel. perfect." />
     <meta
       property="og:description"
-      content="VoidWeb Solutions is a premium digital agency specializing in high-performance UI/UX design, visual development, and immersive digital ecosystems for global brands."
+      content="VoidWeb Solutions: Premium UI/UX design, visual development, and immersive digital ecosystems."
     />
     <meta property="og:image" content="https://voidwebsolutions.com/logo.png" />
 
@@ -36,7 +55,7 @@
     />
     <meta
       property="twitter:description"
-      content="VoidWeb Solutions is a premium digital agency specializing in high-performance UI/UX design, visual development, and immersive digital ecosystems for global brands."
+      content="VoidWeb Solutions: Premium UI/UX design, visual development, and immersive digital ecosystems."
     />
     <meta
       property="twitter:image"
@@ -176,6 +195,19 @@
       .logo-rings circle {
         transform-origin: center;
         opacity: 0.8;
+      }
+
+      /* Marquee Animation */
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .animate-scroll {
+        animation: scroll 30s linear infinite;
       }
     </style>
   </head>
@@ -592,6 +624,495 @@
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW SECTION: Tech Stack Marquee -->
+    <section
+      class="py-12 border-t border-b border-white/5 bg-black/50 overflow-hidden relative"
+    >
+      <div
+        class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10"
+      ></div>
+      <div
+        class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10"
+      ></div>
+
+      <div class="w-full overflow-hidden whitespace-nowrap">
+        <div class="inline-flex animate-scroll items-center gap-16">
+          <!-- Stack Items (Duplicated for smooth loop) -->
+          <!-- Set 1 -->
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+              ></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <path d="M9 13l-1.5 2.5L9 18"></path>
+              <path d="M15 13l1.5 2.5-1.5 2.5"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >HTML5</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              ></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >CSS3</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <path d="M9 9h6v6H9z"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >JAVASCRIPT</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              ></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >WEBFLOW</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="3"></circle>
+              <ellipse cx="12" cy="12" rx="10" ry="4"></ellipse>
+              <ellipse
+                cx="12"
+                cy="12"
+                rx="10"
+                ry="4"
+                transform="rotate(60 12 12)"
+              ></ellipse>
+              <ellipse
+                cx="12"
+                cy="12"
+                rx="10"
+                ry="4"
+                transform="rotate(120 12 12)"
+              ></ellipse>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >REACT</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 2l9 5v10l-9 5-9-5V7z"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >NODE.JS</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 2l10 10-5 5 2 2-7 3"></path>
+              <path d="M14 2L7 9"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >FLUTTER</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+              <path d="M2 12h20"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >WORDPRESS</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
+              ></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >SHOPIFY</span
+            >
+          </div>
+
+          <!-- Set 2 (Duplicate) -->
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+              ></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <path d="M9 13l-1.5 2.5L9 18"></path>
+              <path d="M15 13l1.5 2.5-1.5 2.5"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >HTML5</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              ></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >CSS3</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <path d="M9 9h6v6H9z"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >JAVASCRIPT</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              ></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >WEBFLOW</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="3"></circle>
+              <ellipse cx="12" cy="12" rx="10" ry="4"></ellipse>
+              <ellipse
+                cx="12"
+                cy="12"
+                rx="10"
+                ry="4"
+                transform="rotate(60 12 12)"
+              ></ellipse>
+              <ellipse
+                cx="12"
+                cy="12"
+                rx="10"
+                ry="4"
+                transform="rotate(120 12 12)"
+              ></ellipse>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >REACT</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 2l9 5v10l-9 5-9-5V7z"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >NODE.JS</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 2l10 10-5 5 2 2-7 3"></path>
+              <path d="M14 2L7 9"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >FLUTTER</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+              <path d="M2 12h20"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >WORDPRESS</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
+              ></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span class="text-xl font-display font-bold tracking-widest"
+              >SHOPIFY</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW SECTION: Process / Workflow -->
+    <section class="py-24 bg-gray-950/50">
+      <div class="max-w-[1400px] mx-auto px-6">
+        <div class="mb-16 text-center md:text-left">
+          <h2
+            class="text-3xl md:text-5xl font-display font-bold text-white mb-4"
+          >
+            THE PROCESS
+          </h2>
+          <div class="h-1 w-24 bg-cyan-500 mx-auto md:mx-0"></div>
+          <p class="text-gray-400 mt-4 max-w-lg mx-auto md:mx-0">
+            From chaotic void to structured reality.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <!-- Step 1 -->
+          <div
+            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300"
+          >
+            <div
+              class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors"
+            >
+              01
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Discovery</h3>
+            <p class="text-gray-400 text-sm">
+              We deep dive into your brand, goals, and user needs to chart the
+              path forward.
+            </p>
+          </div>
+          <!-- Step 2 -->
+          <div
+            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300"
+          >
+            <div
+              class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors"
+            >
+              02
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Design</h3>
+            <p class="text-gray-400 text-sm">
+              Wireframes evolve into high-fidelity prototypes. We iterate until
+              perfection.
+            </p>
+          </div>
+          <!-- Step 3 -->
+          <div
+            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300"
+          >
+            <div
+              class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors"
+            >
+              03
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Build</h3>
+            <p class="text-gray-400 text-sm">
+              Clean, scalable code. We bring the visuals to life with
+              pixel-perfect precision.
+            </p>
+          </div>
+          <!-- Step 4 -->
+          <div
+            class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300"
+          >
+            <div
+              class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors"
+            >
+              04
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Launch</h3>
+            <p class="text-gray-400 text-sm">
+              Deployment, testing, and handover. We ensure your digital presence
+              is ready for the world.
+            </p>
           </div>
         </div>
       </div>
