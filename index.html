@@ -282,20 +282,21 @@
 
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-12 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-                    <li><a href="#home" class="interactive block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-cyan-400 md:p-0" aria-current="page">Home</a></li>
-                    <li><a href="#services" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors">Services</a></li>
-                    <li><a href="#projects" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors">Work</a></li>
-                    <li><a href="#about" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors">Agency</a></li>
+                    <!-- Note: Active classes are now managed by JS -->
+                    <li><a href="#home" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors nav-link">Home</a></li>
+                    <li><a href="#services" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors nav-link">Services</a></li>
+                    <li><a href="#projects" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors nav-link">Work</a></li>
+                    <li><a href="#about" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors nav-link">Agency</a></li>
                 </ul>
             </div>
         </div>
         <!-- Mobile Menu (Background fixed for better visibility) -->
         <div id="mobile-menu" class="hidden md:hidden bg-slate-950/95 backdrop-blur-xl border-t border-gray-800 absolute left-0 right-0 z-50 shadow-2xl">
             <ul class="flex flex-col font-medium p-6 space-y-4">
-                <li><a href="#home" class="block py-2 text-xl text-cyan-400 font-display" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Home</a></li>
-                <li><a href="#services" class="block py-2 text-xl text-gray-300 hover:text-white font-display" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Services</a></li>
-                <li><a href="#projects" class="block py-2 text-xl text-gray-300 hover:text-white font-display" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Work</a></li>
-                <li><a href="#about" class="block py-2 text-xl text-gray-300 hover:text-white font-display" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Agency</a></li>
+                <li><a href="#home" class="block py-2 text-xl text-gray-300 hover:text-white font-display nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Home</a></li>
+                <li><a href="#services" class="block py-2 text-xl text-gray-300 hover:text-white font-display nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Services</a></li>
+                <li><a href="#projects" class="block py-2 text-xl text-gray-300 hover:text-white font-display nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Work</a></li>
+                <li><a href="#about" class="block py-2 text-xl text-gray-300 hover:text-white font-display nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Agency</a></li>
             </ul>
         </div>
     </nav>
@@ -359,46 +360,46 @@
 
             <!-- Bento Grid - Stacks on mobile, Grid on MD -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[600px]">
-                <!-- Large Card -->
-                <div class="interactive service-card md:col-span-2 md:row-span-2 glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 transition-all duration-500 min-h-[300px] reveal-item delay-100">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl transform group-hover:scale-150 transition-transform duration-700"></div>
+                <!-- Large Card (Now Web Development) -->
+                <div class="interactive service-card md:col-span-2 md:row-span-2 glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 hover:-translate-y-2 transition-all duration-500 ease-out min-h-[300px] reveal-item delay-100">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl transform group-hover:scale-150 transition-transform duration-700 ease-out"></div>
                     <div class="relative z-10 h-full flex flex-col justify-between">
-                        <i data-lucide="layout" class="w-10 h-10 md:w-12 md:h-12 text-cyan-400 mb-6"></i>
+                        <i data-lucide="code-2" class="w-10 h-10 md:w-12 md:h-12 text-cyan-400 mb-6 group-hover:-translate-y-2 transition-transform duration-500"></i>
                         <div>
-                            <h3 class="text-2xl md:text-3xl font-display font-bold text-white mb-4">UI/UX Design</h3>
+                            <h3 class="text-2xl md:text-3xl font-display font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors duration-300">Web Development</h3>
                             <p class="text-gray-400 max-w-md leading-relaxed text-sm md:text-base">
-                                We craft intuitive, aesthetically rigorous interfaces. Our design process focuses on user behavior, ensuring every interaction feels natural and engaging. From wireframes to high-fidelity prototypes.
+                                Pixel-perfect implementation using modern frameworks. We build fast, SEO-ready, and scalable architectures designed for high-performance ecosystems.
                             </p>
                             <ul class="mt-6 flex flex-wrap gap-2 md:gap-3 text-xs font-mono text-cyan-300">
-                                <li class="px-3 py-1 border border-cyan-900 rounded-full">Figma</li>
-                                <li class="px-3 py-1 border border-cyan-900 rounded-full">Prototyping</li>
-                                <li class="px-3 py-1 border border-cyan-900 rounded-full">Design Systems</li>
+                                <li class="px-3 py-1 border border-cyan-900 rounded-full bg-cyan-950/30">React / Next.js</li>
+                                <li class="px-3 py-1 border border-cyan-900 rounded-full bg-cyan-950/30">Tailwind CSS</li>
+                                <li class="px-3 py-1 border border-cyan-900 rounded-full bg-cyan-950/30">Node.js / Flutter</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tall Card -->
-                <div class="interactive service-card glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 transition-all duration-500 min-h-[250px] reveal-item delay-200">
+                <!-- Tall Card (Now UI/UX Design) -->
+                <div class="interactive service-card glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 hover:-translate-y-2 transition-all duration-500 ease-out min-h-[250px] reveal-item delay-200">
                     <div class="relative z-10 h-full flex flex-col justify-between">
-                        <i data-lucide="code-2" class="w-10 h-10 text-cyan-400 mb-4"></i>
+                        <i data-lucide="layout" class="w-10 h-10 text-cyan-400 mb-4 group-hover:-translate-y-2 transition-transform duration-500"></i>
                         <div>
-                            <h3 class="text-xl md:text-2xl font-display font-bold text-white mb-2">Web Development</h3>
+                            <h3 class="text-xl md:text-2xl font-display font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">UI/UX Design</h3>
                             <p class="text-gray-400 text-sm mb-4">
-                                Pixel-perfect implementation using modern frameworks. Fast, SEO-ready, and scalable.
+                                We craft intuitive, aesthetically rigorous interfaces focusing on user behavior.
                             </p>
                             <div class="w-full h-[1px] bg-gray-800 my-4"></div>
-                             <p class="text-gray-400 text-sm">Flutter / React / Tailwind</p>
+                             <p class="text-gray-400 text-sm font-mono text-xs text-cyan-300">Figma • Prototyping</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Wide Card -->
-                <div class="interactive service-card glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 transition-all duration-500 min-h-[250px] reveal-item delay-300">
+                <!-- Wide Card (Product Strategy) -->
+                <div class="interactive service-card glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 hover:-translate-y-2 transition-all duration-500 ease-out min-h-[250px] reveal-item delay-300">
                     <div class="relative z-10 h-full flex flex-col justify-between">
-                        <i data-lucide="box" class="w-10 h-10 text-cyan-400 mb-4"></i>
+                        <i data-lucide="box" class="w-10 h-10 text-cyan-400 mb-4 group-hover:-translate-y-2 transition-transform duration-500"></i>
                         <div>
-                            <h3 class="text-xl md:text-2xl font-display font-bold text-white mb-2">Product Strategy</h3>
+                            <h3 class="text-xl md:text-2xl font-display font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">Product Strategy</h3>
                             <p class="text-gray-400 text-sm">
                                 End-to-end product development. We turn concepts into viable market products.
                             </p>
@@ -489,27 +490,27 @@
             
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Step 1 -->
-                <div class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 process-card reveal-item delay-100">
-                    <div class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors">01</div>
-                    <h3 class="text-xl font-bold text-white mb-3">Discovery</h3>
+                <div class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 hover:-translate-y-2 transition-all duration-500 ease-out process-card reveal-item delay-100">
+                    <div class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors duration-500">01</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300">Discovery</h3>
                     <p class="text-gray-400 text-sm">We deep dive into your brand, goals, and user needs to chart the path forward.</p>
                 </div>
                 <!-- Step 2 -->
-                <div class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 process-card reveal-item delay-200">
-                    <div class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors">02</div>
-                    <h3 class="text-xl font-bold text-white mb-3">Design</h3>
+                <div class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 hover:-translate-y-2 transition-all duration-500 ease-out process-card reveal-item delay-200">
+                    <div class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors duration-500">02</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300">Design</h3>
                     <p class="text-gray-400 text-sm">Wireframes evolve into high-fidelity prototypes. We iterate until perfection.</p>
                 </div>
                 <!-- Step 3 -->
-                <div class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 process-card reveal-item delay-300">
-                    <div class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors">03</div>
-                    <h3 class="text-xl font-bold text-white mb-3">Build</h3>
+                <div class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 hover:-translate-y-2 transition-all duration-500 ease-out process-card reveal-item delay-300">
+                    <div class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors duration-500">03</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300">Build</h3>
                     <p class="text-gray-400 text-sm">Clean, scalable code. We bring the visuals to life with pixel-perfect precision.</p>
                 </div>
                 <!-- Step 4 -->
-                <div class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 transition-all duration-300 process-card reveal-item delay-400">
-                    <div class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors">04</div>
-                    <h3 class="text-xl font-bold text-white mb-3">Launch</h3>
+                <div class="group relative p-8 glass-panel rounded-2xl border border-gray-800 hover:border-cyan-500/50 hover:-translate-y-2 transition-all duration-500 ease-out process-card reveal-item delay-400">
+                    <div class="text-6xl font-display font-bold text-gray-800 mb-4 group-hover:text-cyan-900 transition-colors duration-500">04</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300">Launch</h3>
                     <p class="text-gray-400 text-sm">Deployment, testing, and handover. We ensure your digital presence is ready for the world.</p>
                 </div>
             </div>
@@ -762,6 +763,49 @@
             }
             type();
         }
+
+        // --- Scroll Spy for Active Navigation Links ---
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY || window.pageYOffset;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150; // Offset for fixed header
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    // Update Desktop Menu
+                    const desktopLinks = document.querySelectorAll('#navbar-sticky a');
+                    desktopLinks.forEach(link => {
+                        link.classList.remove('text-white', 'bg-blue-700', 'md:text-cyan-400', 'text-cyan-400');
+                        link.classList.add('text-gray-400');
+                    });
+                    const activeDesktopLink = document.querySelector(`#navbar-sticky a[href="#${sectionId}"]`);
+                    if (activeDesktopLink) {
+                        activeDesktopLink.classList.remove('text-gray-400');
+                        activeDesktopLink.classList.add('text-cyan-400');
+                    }
+
+                    // Update Mobile Menu
+                    const mobileLinks = document.querySelectorAll('#mobile-menu a');
+                    mobileLinks.forEach(link => {
+                        link.classList.remove('text-cyan-400');
+                        link.classList.add('text-gray-300');
+                    });
+                    const activeMobileLink = document.querySelector(`#mobile-menu a[href="#${sectionId}"]`);
+                    if (activeMobileLink) {
+                        activeMobileLink.classList.remove('text-gray-300');
+                        activeMobileLink.classList.add('text-cyan-400');
+                    }
+                }
+            });
+        }
+
+        // Attach scroll event and trigger once on load
+        window.addEventListener('scroll', updateActiveNavLink);
+        updateActiveNavLink(); 
+
 
         // --- Splash Screen & Intro Logic ---
         function removeSplashAndStart() {
