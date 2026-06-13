@@ -81,11 +81,33 @@
     <meta property="twitter:description" content="VoidWeb Solutions is a premium digital agency specializing in UI/UX design, custom web development, mobile apps, and immersive digital ecosystems.">
     <meta property="twitter:image" content="https://voidwebsolutions.com/logo.png">
 
-    <!-- Deferred External Scripts to eliminate render-blocking -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <!-- FOUC Preventer: Hide main content until Tailwind loads, but keep splash screen visible -->
+    <style>
+        /* Hide everything by default to prevent Flash of Unstyled Content */
+        html { visibility: hidden; background-color: #050505; }
+        
+        /* Make only the html and splash screen visible immediately */
+        html.tailwind-loaded { visibility: visible; }
+        
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #050505;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            visibility: visible; /* Ensure splash is visible even when html is hidden */
+        }
+    </style>
+
+    <!-- Tailwind WITHOUT defer to ensure it processes ASAP to unhide the page -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
@@ -138,7 +160,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Behind everything */
+            z-index: 0; /* Changed from -1 to 0 to sit in front of the body background */
             opacity: 0.6;
             pointer-events: none;
         }
@@ -231,8 +253,11 @@
 </head>
 <body class="antialiased selection:bg-cyan-500/30">
 
+    <!-- Immediately unhide the HTML once the body starts parsing to avoid FOUC -->
+    <script>document.documentElement.classList.add('tailwind-loaded');</script>
+
     <!-- Splash Screen -->
-    <div id="splash-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505] transition-opacity duration-700">
+    <div id="splash-screen" class="transition-opacity duration-700">
         <div class="flex flex-col items-center">
             <svg width="80" height="80" viewBox="0 0 100 100" class="logo-rings mb-6">
                 <circle cx="50" cy="50" r="48" stroke="#0ea5e9" stroke-width="2" fill="none" class="opacity-20"/>
@@ -243,6 +268,10 @@
             <span id="splash-text" class="text-3xl md:text-4xl font-display font-bold tracking-tight text-white opacity-0 translate-y-4 transition-all duration-700">
                 VOID<span class="text-cyan-400">WEB</span> SOLUTIONS
             </span>
+            <!-- Premium Loading Bar -->
+            <div id="splash-loader" class="w-48 sm:w-64 h-[2px] mt-8 bg-gray-800/80 rounded-full overflow-hidden opacity-0 translate-y-4 transition-all duration-700">
+                <div id="splash-progress" class="h-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] w-0"></div>
+            </div>
         </div>
     </div>
 
@@ -282,21 +311,20 @@
 
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-12 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-                    <!-- Note: Active classes are now managed by JS -->
-                    <li><a href="#home" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors nav-link">Home</a></li>
-                    <li><a href="#services" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors nav-link">Services</a></li>
-                    <li><a href="#projects" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors nav-link">Work</a></li>
-                    <li><a href="#about" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-white md:p-0 transition-colors nav-link">Agency</a></li>
+                    <li><a href="#home" class="interactive block py-2 px-3 text-cyan-400 rounded md:bg-transparent md:p-0 transition-colors" aria-current="page">Home</a></li>
+                    <li><a href="#services" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-cyan-400 md:p-0 transition-colors">Services</a></li>
+                    <li><a href="#projects" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-cyan-400 md:p-0 transition-colors">Work</a></li>
+                    <li><a href="#about" class="interactive block py-2 px-3 text-gray-400 rounded hover:bg-gray-800 md:hover:bg-transparent md:hover:text-cyan-400 md:p-0 transition-colors">Agency</a></li>
                 </ul>
             </div>
         </div>
         <!-- Mobile Menu (Background fixed for better visibility) -->
         <div id="mobile-menu" class="hidden md:hidden bg-slate-950/95 backdrop-blur-xl border-t border-gray-800 absolute left-0 right-0 z-50 shadow-2xl">
             <ul class="flex flex-col font-medium p-6 space-y-4">
-                <li><a href="#home" class="block py-2 text-xl text-gray-300 hover:text-white font-display nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Home</a></li>
-                <li><a href="#services" class="block py-2 text-xl text-gray-300 hover:text-white font-display nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Services</a></li>
-                <li><a href="#projects" class="block py-2 text-xl text-gray-300 hover:text-white font-display nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Work</a></li>
-                <li><a href="#about" class="block py-2 text-xl text-gray-300 hover:text-white font-display nav-link" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Agency</a></li>
+                <li><a href="#home" class="block py-2 text-xl text-cyan-400 font-display transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Home</a></li>
+                <li><a href="#services" class="block py-2 text-xl text-gray-300 hover:text-cyan-400 font-display transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Services</a></li>
+                <li><a href="#projects" class="block py-2 text-xl text-gray-300 hover:text-cyan-400 font-display transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Work</a></li>
+                <li><a href="#about" class="block py-2 text-xl text-gray-300 hover:text-cyan-400 font-display transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Agency</a></li>
             </ul>
         </div>
     </nav>
@@ -360,7 +388,7 @@
 
             <!-- Bento Grid - Stacks on mobile, Grid on MD -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[600px]">
-                <!-- Large Card (Now Web Development) -->
+                <!-- Large Card (Web Development) -->
                 <div class="interactive service-card md:col-span-2 md:row-span-2 glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 hover:-translate-y-2 transition-all duration-500 ease-out min-h-[300px] reveal-item delay-100">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl transform group-hover:scale-150 transition-transform duration-700 ease-out"></div>
                     <div class="relative z-10 h-full flex flex-col justify-between">
@@ -379,7 +407,7 @@
                     </div>
                 </div>
 
-                <!-- Tall Card (Now UI/UX Design) -->
+                <!-- Tall Card (UI/UX Design) -->
                 <div class="interactive service-card glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden group border-white/5 hover:border-cyan-500/30 hover:-translate-y-2 transition-all duration-500 ease-out min-h-[250px] reveal-item delay-200">
                     <div class="relative z-10 h-full flex flex-col justify-between">
                         <i data-lucide="layout" class="w-10 h-10 text-cyan-400 mb-4 group-hover:-translate-y-2 transition-transform duration-500"></i>
@@ -418,63 +446,26 @@
         <div class="w-full overflow-hidden whitespace-nowrap">
             <div class="inline-flex animate-scroll items-center gap-16">
                 <!-- Stack Items (Duplicated for smooth loop) -->
-                <!-- Set 1 -->
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">HTML5</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">CSS3</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">JAVASCRIPT</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">WEBFLOW</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">REACT</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">NODE.JS</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">FLUTTER</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">WORDPRESS</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">SHOPIFY</span>
-                </div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">HTML5</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">CSS3</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">JAVASCRIPT</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">WEBFLOW</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">REACT</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">NODE.JS</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">FLUTTER</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">WORDPRESS</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">SHOPIFY</span></div>
 
                 <!-- Set 2 (Duplicate for loop) -->
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">HTML5</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">CSS3</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">JAVASCRIPT</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">WEBFLOW</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">REACT</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">NODE.JS</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">FLUTTER</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">WORDPRESS</span>
-                </div>
-                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300">
-                    <span class="text-xl font-display font-bold tracking-widest">SHOPIFY</span>
-                </div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">HTML5</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">CSS3</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">JAVASCRIPT</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">WEBFLOW</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">REACT</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">NODE.JS</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">FLUTTER</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">WORDPRESS</span></div>
+                <div class="flex items-center gap-4 text-gray-500 hover:text-cyan-400 transition-colors duration-300"><span class="text-xl font-display font-bold tracking-widest">SHOPIFY</span></div>
             </div>
         </div>
     </section>
@@ -722,7 +713,7 @@
             }
         });
 
-        // --- Custom Cursor Logic (Only active on desktop via CSS, but logic remains safe) ---
+        // --- Custom Cursor Logic ---
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
 
@@ -764,49 +755,6 @@
             type();
         }
 
-        // --- Scroll Spy for Active Navigation Links ---
-        function updateActiveNavLink() {
-            const sections = document.querySelectorAll('section[id]');
-            const scrollPos = window.scrollY || window.pageYOffset;
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150; // Offset for fixed header
-                const sectionHeight = section.offsetHeight;
-                const sectionId = section.getAttribute('id');
-
-                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                    // Update Desktop Menu
-                    const desktopLinks = document.querySelectorAll('#navbar-sticky a');
-                    desktopLinks.forEach(link => {
-                        link.classList.remove('text-white', 'bg-blue-700', 'md:text-cyan-400', 'text-cyan-400');
-                        link.classList.add('text-gray-400');
-                    });
-                    const activeDesktopLink = document.querySelector(`#navbar-sticky a[href="#${sectionId}"]`);
-                    if (activeDesktopLink) {
-                        activeDesktopLink.classList.remove('text-gray-400');
-                        activeDesktopLink.classList.add('text-cyan-400');
-                    }
-
-                    // Update Mobile Menu
-                    const mobileLinks = document.querySelectorAll('#mobile-menu a');
-                    mobileLinks.forEach(link => {
-                        link.classList.remove('text-cyan-400');
-                        link.classList.add('text-gray-300');
-                    });
-                    const activeMobileLink = document.querySelector(`#mobile-menu a[href="#${sectionId}"]`);
-                    if (activeMobileLink) {
-                        activeMobileLink.classList.remove('text-gray-300');
-                        activeMobileLink.classList.add('text-cyan-400');
-                    }
-                }
-            });
-        }
-
-        // Attach scroll event and trigger once on load
-        window.addEventListener('scroll', updateActiveNavLink);
-        updateActiveNavLink(); 
-
-
         // --- Splash Screen & Intro Logic ---
         function removeSplashAndStart() {
             const splash = document.getElementById('splash-screen');
@@ -829,12 +777,25 @@
 
         window.addEventListener('load', () => {
             const splashText = document.getElementById('splash-text');
-            // Initial text reveal
+            const splashLoader = document.getElementById('splash-loader');
+            const splashProgress = document.getElementById('splash-progress');
+
+            // Initial text & loader reveal
             setTimeout(() => {
                 if(splashText) splashText.classList.remove('opacity-0', 'translate-y-4');
+                if(splashLoader) {
+                    splashLoader.classList.remove('opacity-0', 'translate-y-4');
+                    // Start progress bar fill slightly after reveal
+                    setTimeout(() => {
+                        if(splashProgress) {
+                            splashProgress.style.transition = 'width 1.8s ease-in-out';
+                            splashProgress.style.width = '100%';
+                        }
+                    }, 200); 
+                }
             }, 500);
 
-            // Fade out after delay
+            // Fade out after delay (500ms start + 2000ms load = 2500ms total)
             setTimeout(removeSplashAndStart, 2500);
         });
 
@@ -843,7 +804,6 @@
 
         // Lock scroll initially via JS
         document.body.style.overflow = 'hidden';
-
 
         // --- Vanilla JS Intersection Observer for Scroll Animations ---
         function initObserver() {
@@ -866,9 +826,7 @@
             elements.forEach(el => observer.observe(el));
         }
 
-
         // --- THE VOID VORTEX CANVAS ---
-        // A complex concentric circle animation mimicking the logo
         const canvas = document.getElementById('void-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -905,11 +863,10 @@
             rings.forEach((ring, index) => {
                 ring.angle += ring.speed;
                 
-                // Create slight wobble effect based on mouse (if available) or time
+                // Create slight wobble effect based on time
                 const wobble = Math.sin(Date.now() * 0.001 + index) * 10;
                 
                 ctx.beginPath();
-                // Elliptical rotation to give 3D depth feel
                 ctx.ellipse(
                     centerX, 
                     centerY, 
@@ -935,6 +892,48 @@
         btn.addEventListener('click', () => {
             menu.classList.toggle('hidden');
         });
+
+        // --- Scroll Spy for Active Navigation Links ---
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY || window.pageYOffset;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150; // Offset for fixed header
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    // Update Desktop Menu
+                    const desktopLinks = document.querySelectorAll('#navbar-sticky a');
+                    desktopLinks.forEach(link => {
+                        link.classList.remove('text-cyan-400');
+                        link.classList.add('text-gray-400');
+                    });
+                    const activeDesktopLink = document.querySelector(`#navbar-sticky a[href="#${sectionId}"]`);
+                    if (activeDesktopLink) {
+                        activeDesktopLink.classList.remove('text-gray-400');
+                        activeDesktopLink.classList.add('text-cyan-400');
+                    }
+
+                    // Update Mobile Menu
+                    const mobileLinks = document.querySelectorAll('#mobile-menu a');
+                    mobileLinks.forEach(link => {
+                        link.classList.remove('text-cyan-400');
+                        link.classList.add('text-gray-300');
+                    });
+                    const activeMobileLink = document.querySelector(`#mobile-menu a[href="#${sectionId}"]`);
+                    if (activeMobileLink) {
+                        activeMobileLink.classList.remove('text-gray-300');
+                        activeMobileLink.classList.add('text-cyan-400');
+                    }
+                }
+            });
+        }
+
+        // Apply scroll spy logic on scroll and initial load
+        window.addEventListener('scroll', updateActiveNavLink);
+        window.addEventListener('load', updateActiveNavLink);
     </script>
 </body>
 </html>
